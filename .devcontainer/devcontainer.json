@@ -1,0 +1,6 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2-focal",
+  "appPort": [80],
+  "forwardPorts": [],
+  "postCreateCommand": "sudo cp .devcontainer/WELCOME /usr/local/etc/vscode-dev-containers/first-run-notice.txt"
+}
