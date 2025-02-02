@@ -1,0 +1,13 @@
+#!/bin/sh
+
+f1=$(mktemp)
+f2=$(mktemp)
+
+apt-cache depends "$1" | grep "Depends:" | awk '{print $2}' | sort > "$f1"
+apt-cache depends "$2" | grep "Depends:" | awk '{print $2}' | sort > "$f2"
+
+comm -12 "$f1" "$f2"
+
+rm "$f1" &>/dev/null
+rm "$f2" &>/dev/null
+
