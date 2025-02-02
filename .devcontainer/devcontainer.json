@@ -7,13 +7,17 @@
       "userGid": "1000"
     },
     "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    "./features/patch-dind-distro": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "./features/unpatch-dind-distro": {}
   },
   "remoteUser": "codespace",
   "containerUser": "codespace",
   "overrideFeatureInstallOrder": [
     "ghcr.io/devcontainers/features/common-utils",
     "ghcr.io/devcontainers/features/github-cli",
-    "ghcr.io/devcontainers/features/docker-in-docker"
+    "./features/patch-dind-distro",
+    "ghcr.io/devcontainers/features/docker-in-docker",
+    "./features/unpatch-dind-distro"
   ]
 }
