@@ -1,3 +1,19 @@
 {
-  "image": "kalilinux/kali-rolling:latest"
+  "image": "kalilinux/kali-rolling:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "codespace",
+      "userUid": "1000",
+      "userGid": "1000"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "remoteUser": "codespace",
+  "containerUser": "codespace",
+  "overrideFeatureInstallOrder": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/github-cli",
+    "ghcr.io/devcontainers/features/docker-in-docker"
+  ]
 }
