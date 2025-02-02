@@ -6,6 +6,7 @@
       "userUid": "1000",
       "userGid": "1000"
     },
+    "ghcr.io/devcontainers/features/sshd:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "./features/patch-dind-distro": {},
     "ghcr.io/devcontainers/features/docker-in-docker:2": {},
@@ -15,6 +16,7 @@
   "containerUser": "codespace",
   "overrideFeatureInstallOrder": [
     "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/sshd",
     "ghcr.io/devcontainers/features/github-cli",
     "./features/patch-dind-distro",
     "ghcr.io/devcontainers/features/docker-in-docker",
