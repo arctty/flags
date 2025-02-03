@@ -26,6 +26,7 @@ for container in $CONTAINERS; do
     (cd "$STAGING"; git add --all; git commit -m "profile: add profile \`$profile\`")
   done
   cp -a .codespaces "$STAGING/"
+  cp WELCOME "$STAGING/"
   git worktree remove 'container'
   (
     cd "$STAGING"

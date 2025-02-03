@@ -1,3 +1,10 @@
 {
-  "postCreateCommand": ["./.codespaces/init"]
+  "postCreateCommand": ["./.codespaces/init"],
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "WELCOME"
+      ]
+    }
+  }
 }
