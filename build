@@ -1,0 +1,38 @@
+#!/bin/sh
+
+STAGING="machines-staging"
+PUBLISH_PREFIX="machines-"
+CONTAINERS="general-base kali-base"
+
+for container in $CONTAINERS; do
+  git worktree add --orphan "$STAGING" &>/dev/null
+  STAGING_DC="$STAGING/.devcontainer"
+  mkdir -p "$STAGING_DC"
+
+  git worktree remove 'container' &>/dev/null
+  git worktree add 'container' "$container"
+  IMAGE_DC="./container/.devcontainer"
+  for d in ./profiles/*; do
+    profile=$(basename "$d")
+    mkdir -p "$STAGING_DC/$profile"
+    cp -a "$IMAGE_DC/." "$STAGING_DC/$profile/"
+    jq -s '(.[0] // {}) * (.[1] // {}) * (.[2] // {}) * { containerEnv: { ARCTTY_FLAGS_PROFILE: $profile, ARCTTY_FLAGS_PROFILE_DIR: $profile_dir } }' \
+      --arg 'profile' "$profile" \
+      --arg 'profile_dir' "./.devcontainer/$profile" \
+      "$IMAGE_DC/devcontainer.json" \
+      'devcontainer.json' \
+      "$d/devcontainer.json" > "$STAGING_DC/$profile/devcontainer.json"
+    cp "$d/config" "$STAGING_DC/$profile/"
+    (cd "$STAGING"; git add --all; git commit -m "profile: add profile \`$profile\`")
+  done
+  cp -a .codespaces "$STAGING/"
+  git worktree remove 'container'
+  (
+    cd "$STAGING"
+    git add --all
+    git commit -m "finalize: add scripts"
+    git branch -M "$PUBLISH_PREFIX$container"
+  )
+  git worktree remove "$STAGING"
+done
+
