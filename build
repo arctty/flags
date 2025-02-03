@@ -2,7 +2,7 @@
 
 STAGING="machines-staging"
 PUBLISH_PREFIX="machines-"
-CONTAINERS="general-base kali-base"
+CONTAINERS="general-base kali-web"
 
 for container in $CONTAINERS; do
   git worktree add --orphan "$STAGING" &>/dev/null
