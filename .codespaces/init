@@ -5,8 +5,8 @@
 # variables imported from the config above
 IMAGE=$IMAGE
 
-gh codespace ports forward --codespace "$CODESPACE_NAME" 80:8000 &>/dev/null &
-curl -s --max-time 1 http://localhost:8000 &>/dev/null
+# gh codespace ports forward --codespace "$CODESPACE_NAME" 80:8000 &>/dev/null &
+# curl -s --max-time 1 http://localhost:8000 &>/dev/null
 
 cat >> WELCOME <<EOF
 🧩 The challenge \`$ARCTTY_FLAGS_PROFILE\` will be available in few seconds.
