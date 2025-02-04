@@ -1,3 +1,6 @@
 {
-  "image": "kalilinux/kali-rolling:latest"
+  "image": "kalilinux/kali-rolling:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  }
 }
