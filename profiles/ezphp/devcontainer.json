@@ -1,0 +1,8 @@
+{
+  "portsAttributes": {
+    "80": {
+      "label": "challenge port",
+      "onAutoForward": "openBrowserOnce"
+    }
+  }
+}
