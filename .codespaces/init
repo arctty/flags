@@ -1,0 +1,63 @@
+#!/bin/sh
+
+. "$ARCTTY_FLAGS_PROFILE_DIR/config"
+
+# variables imported from the config above
+IMAGE=$IMAGE
+
+cat >> WELCOME <<EOF
+🧩 The challenge \`$ARCTTY_FLAGS_PROFILE\` will be available in few seconds.
+EOF
+
+mkdir -p /usr/local/etc/vscode-dev-containers/
+sudo cp WELCOME /usr/local/etc/vscode-dev-containers/first-run-notice.txt
+cp WELCOME /workspaces/.codespaces/shared/first-run-notice.txt
+
+ensure() {
+  name=$1
+  shift
+  while true; do
+    "$@"
+    if [ "$?" -eq 0 ]; then
+      break
+    fi
+    echo "waiting for $name..."
+    sleep 1
+  done
+}
+
+ensure 'image' docker pull --quiet "$IMAGE"
+ensure 'container' docker create --quiet --restart always --publish 80:80 --name target "$IMAGE"
+ensure 'target' docker start target
+
+TIMEOUT=10
+t=0
+while true; do
+  url=$(gh codespace ports --codespace "$CODESPACE_NAME" --json 'browseUrl,sourcePort' --jq '.[] | select(.sourcePort == 80) | .browseUrl')
+  t=$((t + 1))
+  if [ -n "$url" ] || [ "$t" -ge "$TIMEOUT" ]; then
+    break
+  fi
+  sleep 1
+done
+
+if [ -z "$url" ]; then
+  echo Failed to publish the service. >&2
+  exit 1
+fi
+
+sleep 3
+
+gh codespace ports visibility --codespace "$CODESPACE_NAME" 80:public
+
+cat >> WELCOME <<EOF
+🎉 Challenge is ready: $url
+
+If the URL is not publicly accessible:
+* either run \`gh codespace ports visibility -c "\$CODESPACE_NAME" 80:public\`
+  (in GitHub Codespaces terminal / on your local machine)
+* or select \`Port Visibility > Public\` after right clicking the item under
+  the \`PORTS\` tab
+
+💪 Let's start hacking!
+EOF
