@@ -1,0 +1,48 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "codespace",
+      "userUid": "1000",
+      "userGid": "1000"
+    },
+    "ghcr.io/devcontainers/features/sshd:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "./features/patch-dind-distro": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "./features/unpatch-dind-distro": {}
+  },
+  "remoteUser": "codespace",
+  "containerUser": "codespace",
+  "overrideFeatureInstallOrder": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/sshd",
+    "ghcr.io/devcontainers/features/github-cli",
+    "./features/patch-dind-distro",
+    "ghcr.io/devcontainers/features/docker-in-docker",
+    "./features/unpatch-dind-distro"
+  ],
+  "postCreateCommand": [
+    "./.codespaces/init"
+  ],
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "WELCOME"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "80": {
+      "label": "challenge port",
+      "onAutoForward": "openBrowserOnce"
+    }
+  },
+  "containerEnv": {
+    "ARCTTY_FLAGS_PROFILE": "ezphp",
+    "ARCTTY_FLAGS_PROFILE_DIR": "./.devcontainer/ezphp"
+  }
+}
