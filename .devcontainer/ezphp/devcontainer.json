@@ -1,0 +1,27 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2-focal",
+  "appPort": [
+    80
+  ],
+  "forwardPorts": [],
+  "postCreateCommand": [
+    "./.codespaces/init"
+  ],
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "WELCOME"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "80": {
+      "label": "challenge port",
+      "onAutoForward": "openBrowserOnce"
+    }
+  },
+  "containerEnv": {
+    "ARCTTY_FLAGS_PROFILE": "ezphp",
+    "ARCTTY_FLAGS_PROFILE_DIR": "./.devcontainer/ezphp"
+  }
+}
